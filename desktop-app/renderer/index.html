@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Lua Executor v2.0</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/monokai.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Titelleiste -->
+    <div class="titlebar">
+        <div class="titlebar-drag">
+            <img src="assets/icon.png" class="titlebar-icon" alt="Icon">
+            <span class="titlebar-title">Roblox Lua Executor v2.0 - Professional Edition</span>
+        </div>
+        <div class="titlebar-controls">
+            <button class="titlebar-button minimize" onclick="minimizeApp()">−</button>
+            <button class="titlebar-button maximize" onclick="maximizeApp()">□</button>
+            <button class="titlebar-button close" onclick="closeApp()">×</button>
+        </div>
+    </div>
+
+    <!-- Hauptinhalt -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>🎯 Script Manager</h3>
+                <button class="sidebar-btn" onclick="newScript()">📄 Neues Script</button>
+                <button class="sidebar-btn" onclick="loadScript()">📂 Script Laden</button>
+                <button class="sidebar-btn" onclick="saveScript()">💾 Script Speichern</button>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>🎮 Roblox Verbindung</h3>
+                <button class="sidebar-btn" onclick="attachToRoblox()" id="attachBtn">
+                    🔗 An Roblox Anhängen
+                </button>
+                <div class="status-indicator" id="robloxStatus">
+                    <span class="status-dot offline"></span>
+                    <span>Nicht Verbunden</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>⚡ Schnell-Aktionen</h3>
+                <button class="sidebar-btn" onclick="insertTemplate('part')">🧱 Part Erstellen</button>
+                <button class="sidebar-btn" onclick="insertTemplate('gui')">🖥️ GUI Erstellen</button>
+                <button class="sidebar-btn" onclick="insertTemplate('script')">📜 Script Template</button>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>🛡️ Sicherheit</h3>
+                <div class="security-status">
+                    <span class="security-icon">✅</span>
+                    <span>Anti-Detection Aktiv</span>
+                </div>
+                <div class="security-status">
+                    <span class="security-icon">🔒</span>
+                    <span>Sandbox Modus</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Editor Bereich -->
+        <div class="editor-area">
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <div class="toolbar-section">
+                    <button class="toolbar-btn primary" onclick="executeScript()" id="executeBtn">
+                        ▶️ Ausführen
+                    </button>
+                    <button class="toolbar-btn" onclick="clearOutput()">🧹 Leeren</button>
+                    <button class="toolbar-btn" onclick="stopExecution()">⏹️ Stoppen</button>
+                </div>
+                
+                <div class="toolbar-section">
+                    <select class="toolbar-select" id="executionMode">
+                        <option value="safe">🛡️ Sicherer Modus</option>
+                        <option value="advanced">⚡ Erweitert</option>
+                        <option value="bypass">🔓 Bypass Modus</option>
+                    </select>
+                </div>
+
+                <div class="toolbar-section">
+                    <span class="toolbar-info">
+                        <span id="lineCount">Zeilen: 1</span>
+                        <span id="charCount">Zeichen: 0</span>
+                        <span id="execTime">Letzter Lauf: 0ms</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="editor-container">
+                <textarea id="codeEditor" placeholder="-- Ihr Lua Code hier...
+-- Beispiel:
+local part = Instance.new('Part')
+part.Name = 'MeinPart'
+part.Size = Vector3.new(4, 1, 2)
+part.Position = Vector3.new(0, 10, 0)
+part.BrickColor = BrickColor.new('Bright blue')
+part.Parent = workspace
+
+print('Part erstellt:', part.Name)
+print('Position:', part.Position)"></textarea>
+            </div>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="output-panel">
+            <div class="output-header">
+                <h3>📊 Ausgabe Konsole</h3>
+                <div class="output-controls">
+                    <button class="output-btn" onclick="exportOutput()">📋 Exportieren</button>
+                    <button class="output-btn" onclick="clearOutput()">🗑️ Leeren</button>
+                </div>
+            </div>
+            
+            <div class="output-content" id="outputContent">
+                <div class="output-line info">
+                    <span class="timestamp">[15:30:45]</span>
+                    <span class="message">Roblox Lua Executor gestartet - Bereit für Scripts</span>
+                </div>
+                <div class="output-line info">
+                    <span class="timestamp">[15:30:45]</span>
+                    <span class="message">Anti-Detection System aktiviert</span>
+                </div>
+                <div class="output-line warning">
+                    <span class="timestamp">[15:30:45]</span>
+                    <span class="message">Warnung: Immer verantwortungsvoll nutzen!</span>
+                </div>
+            </div>
+
+            <!-- Direkteingabe -->
+            <div class="direct-input">
+                <span class="prompt">></span>
+                <input type="text" id="directCommand" placeholder="Direkter Lua Befehl..." 
+                       onkeypress="handleDirectInput(event)">
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-section">
+            <span class="status-item">🟢 Bereit</span>
+            <span class="status-item">📦 Lua 5.1</span>
+            <span class="status-item" id="robloxConnection">🔴 Roblox: Getrennt</span>
+        </div>
+        <div class="status-section">
+            <span class="status-item">v2.0.1</span>
+            <span class="status-item">Build 2024.08.02</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/lua/lua.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Dark theme colors for Lua executor */
+  --dark-900: hsl(222, 47%, 11%);
+  --dark-800: hsl(215, 25%, 27%);
+  --dark-700: hsl(217, 19%, 35%);
+  --dark-600: hsl(215, 14%, 34%);
+  --green-400: hsl(142, 76%, 64%);
+  --green-600: hsl(142, 71%, 45%);
+  --green-700: hsl(142, 69%, 38%);
+  --blue-400: hsl(213, 94%, 68%);
+  --blue-600: hsl(213, 94%, 56%);
+  --blue-700: hsl(213, 94%, 48%);
+  --yellow-400: hsl(54, 91%, 68%);
+  --yellow-500: hsl(54, 91%, 60%);
+  --slate-400: hsl(215, 20%, 65%);
+  --slate-500: hsl(215, 19%, 55%);
+  --slate-600: hsl(215, 16%, 47%);
+  --slate-700: hsl(215, 19%, 35%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Monaco Editor styling */
+.monaco-editor {
+  background: var(--dark-800) !important;
+}
+
+.monaco-editor .margin {
+  background: var(--dark-700) !important;
+}
+
+.monaco-editor .margin-view-overlays .line-numbers {
+  color: var(--slate-500) !important;
+}
+
+/* Console styling */
+.console-output {
+  background: #000000;
+  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+}
+
+/* Custom scrollbar for dark theme */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--dark-800);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--dark-600);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--slate-600);
+}
+
+/* Syntax highlighting colors */
+.lua-keyword { color: hsl(277, 92%, 76%); }
+.lua-string { color: hsl(31, 100%, 71%); }
+.lua-number { color: hsl(316, 85%, 68%); }
+.lua-comment { color: hsl(215, 20%, 65%); }
+.lua-function { color: hsl(142, 76%, 64%); }
+.lua-variable { color: hsl(213, 94%, 68%); }
+.lua-property { color: hsl(180, 89%, 59%); }

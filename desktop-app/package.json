@@ -1,0 +1,69 @@
+{
+  "name": "roblox-lua-executor",
+  "version": "2.0.1",
+  "description": "Professional Roblox Lua Script Executor",
+  "main": "main.js",
+  "author": "RobloxExecutor Team",
+  "license": "MIT",
+  "homepage": "https://roblox-executor.app",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux",
+    "dist": "electron-builder --publish=never"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "dependencies": {
+    "fengari": "^0.1.4",
+    "fengari-web": "^0.1.4"
+  },
+  "build": {
+    "appId": "com.robloxexecutor.app",
+    "productName": "Roblox Lua Executor",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        },
+        {
+          "target": "portable",
+          "arch": ["x64", "ia32"]
+        }
+      ],
+      "icon": "renderer/assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "renderer/assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "renderer/assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "renderer/assets/icon.ico",
+      "uninstallerIcon": "renderer/assets/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "publish": null
+  }
+}
